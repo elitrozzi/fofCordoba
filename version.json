@@ -1,7 +1,12 @@
 {
-  "version": "1.0.7",
+  "version": "1.0.8",
   "date": "2026-04-11",
   "history": [
+    {
+      "version": "1.0.8",
+      "date": "2026-04-11",
+      "note": "Cursor con forma SVG de puntero real, rojo en mobile y zonas más alejadas del texto"
+    },
     {
       "version": "1.0.7",
       "date": "2026-04-11",

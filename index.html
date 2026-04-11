@@ -50,12 +50,8 @@
     will-change: transform;
   }
   .cursor-arrow {
-    width: 0; height: 0;
-    border-right: 5px solid transparent;
-    border-bottom: 16px solid var(--c);
-    transform: skewX(-8deg);
+    width: 18px; height: 22px;
     flex-shrink: 0;
-    margin-top: 0px;
   }
   .cursor-label {
     font-family: var(--font-sans);
@@ -566,25 +562,29 @@ const allCursors = [
   { label: 'Estudiante',        color: '#ef4444' },
 ];
 const isMobile = window.innerWidth < 768;
-const cursors = isMobile ? allCursors.slice(0, 2) : allCursors;
+// En mobile: solo 2 cursores, el segundo en rojo en lugar de amarillo
+const mobileCursors = [
+  allCursors[0],
+  { ...allCursors[1], color: '#ef4444' },
+];
+const cursors = isMobile ? mobileCursors : allCursors;
 
 const cursorContainer = document.getElementById('cursors');
 
-// Zona segura: los cursores orbitan en los bordes del hero, lejos del texto central
-// Texto central ocupa aprox 30%-70% del ancho y 25%-75% del alto
-// Zonas disponibles: arriba, abajo, izquierda, derecha (margen del hero)
-const ZONES = [
-  // top-left
-  { xMin: 0.03, xMax: 0.35, yMin: 0.05, yMax: 0.35 },
-  // top-right
-  { xMin: 0.65, xMax: 0.97, yMin: 0.05, yMax: 0.35 },
-  // bottom-left
-  { xMin: 0.03, xMax: 0.35, yMin: 0.65, yMax: 0.92 },
-  // bottom-right
-  { xMin: 0.65, xMax: 0.97, yMin: 0.65, yMax: 0.92 },
-  // bottom-center
-  { xMin: 0.30, xMax: 0.70, yMin: 0.75, yMax: 0.92 },
+// Zonas desktop: esquinas alejadas del texto central
+const ZONES_DESKTOP = [
+  { xMin: 0.03, xMax: 0.30, yMin: 0.05, yMax: 0.35 },
+  { xMin: 0.70, xMax: 0.97, yMin: 0.05, yMax: 0.35 },
+  { xMin: 0.03, xMax: 0.30, yMin: 0.65, yMax: 0.92 },
+  { xMin: 0.70, xMax: 0.97, yMin: 0.65, yMax: 0.92 },
+  { xMin: 0.35, xMax: 0.65, yMin: 0.80, yMax: 0.95 },
 ];
+// Zonas mobile: extremos izquierdo y derecho para no tapar el texto
+const ZONES_MOBILE = [
+  { xMin: 0.01, xMax: 0.10, yMin: 0.10, yMax: 0.45 },
+  { xMin: 0.78, xMax: 0.95, yMin: 0.55, yMax: 0.88 },
+];
+const ZONES = isMobile ? ZONES_MOBILE : ZONES_DESKTOP;
 
 function randInZone(z) {
   return {
@@ -597,7 +597,7 @@ cursors.forEach((c, i) => {
   const el = document.createElement('div');
   el.className = 'cursor';
   el.style.setProperty('--c', c.color);
-  el.innerHTML = `<div class="cursor-arrow" style="border-bottom-color:${c.color}"></div><div class="cursor-label" style="background:${c.color}">${c.label}</div>`;
+  el.innerHTML = `<svg class="cursor-arrow" viewBox="0 0 14 20" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 L0,16 L4,12 L6.5,19 L9,18 L6.5,11 L12,11 Z" fill="${c.color}" stroke="white" stroke-width="0.8" stroke-linejoin="round"/></svg><div class="cursor-label" style="background:${c.color}">${c.label}</div>`;
   cursorContainer.appendChild(el);
 
   // Cada cursor arranca en su zona y se mueve a waypoints dentro de ella
