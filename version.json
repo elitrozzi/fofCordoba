@@ -1,7 +1,12 @@
 {
-  "version": "1.0.6",
+  "version": "1.0.7",
   "date": "2026-04-11",
   "history": [
+    {
+      "version": "1.0.7",
+      "date": "2026-04-11",
+      "note": "Centra el contenido del hero en desktop agregando padding-bottom igual al padding-top"
+    },
     {
       "version": "1.0.6",
       "date": "2026-04-11",
