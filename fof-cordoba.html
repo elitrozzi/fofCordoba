@@ -599,7 +599,7 @@ cursors.forEach((c, i) => {
   const el = document.createElement('div');
   el.className = 'cursor';
   el.style.setProperty('--c', c.color);
-  el.innerHTML = `<svg class="cursor-arrow" viewBox="0 0 14 20" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 L0,16 L4,12 L6.5,19 L9,18 L6.5,11 L12,11 Z" fill="${c.color}" stroke="white" stroke-width="0.8" stroke-linejoin="round"/></svg><div class="cursor-label" style="background:${c.color}">${c.label}</div>`;
+  el.innerHTML = `<svg class="cursor-arrow" viewBox="0 0 12 14" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 L0,13 L10,6 Z" fill="${c.color}" stroke="white" stroke-width="0.8" stroke-linejoin="round"/></svg><div class="cursor-label" style="background:${c.color}">${c.label}</div>`;
   cursorContainer.appendChild(el);
 
   // Cada cursor arranca en su zona y se mueve a waypoints dentro de ella
