@@ -1,7 +1,12 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "date": "2026-04-11",
   "history": [
+    {
+      "version": "1.0.2",
+      "date": "2026-04-11",
+      "note": "Reemplaza placeholder con link real del Google Form de participación"
+    },
     {
       "version": "1.0.1",
       "date": "2026-04-11",
