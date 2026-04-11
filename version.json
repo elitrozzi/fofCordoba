@@ -1,7 +1,12 @@
 {
-  "version": "1.0.2",
+  "version": "1.0.3",
   "date": "2026-04-11",
   "history": [
+    {
+      "version": "1.0.3",
+      "date": "2026-04-11",
+      "note": "Fix cursores: desaparecen con fade suave al hacer scroll, solo visibles en el hero"
+    },
     {
       "version": "1.0.2",
       "date": "2026-04-11",

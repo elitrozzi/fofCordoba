@@ -42,6 +42,7 @@
     align-items: flex-start;
     gap: 5px;
     will-change: transform;
+    transition: opacity 0.25s ease;
   }
   .cursor-arrow {
     width: 0; height: 0;
@@ -629,8 +630,14 @@ cursors.forEach((c, i) => {
 
     el.style.transform = `translate(${absX}px, ${absY}px)`;
 
-    // Ocultar si se hizo scroll más allá del hero
-    el.style.opacity = window.scrollY < heroHeight * 0.8 ? '1' : '0';
+    // Fade out en cuanto el usuario empieza a scrollear
+    const scrollY = window.scrollY;
+    const fadeStart = heroHeight * 0.05;
+    const fadeEnd   = heroHeight * 0.18;
+    const op = scrollY <= fadeStart ? 1
+             : scrollY >= fadeEnd   ? 0
+             : 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
+    el.style.opacity = String(op);
 
     requestAnimationFrame(animateCursor);
   }
