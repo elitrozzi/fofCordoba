@@ -1,7 +1,12 @@
 {
-  "version": "1.0.5",
+  "version": "1.0.6",
   "date": "2026-04-11",
   "history": [
+    {
+      "version": "1.0.6",
+      "date": "2026-04-11",
+      "note": "Aumenta padding-top del hero en mobile para centrar mejor el contenido"
+    },
     {
       "version": "1.0.5",
       "date": "2026-04-11",
