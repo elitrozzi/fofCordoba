@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friends of Figma Córdoba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #161212;
+    --white: #faf9f5;
+    --grey: #5b5757;
+    --light-grey: #c5c5c5;
+    --bg: #faf9f5;
+    --accent: #1136c7;
+    --accent-light: rgba(17, 54, 199, 0.08);
+    --font-sans: 'Work Sans', sans-serif;
+    --font-hand: 'Caveat', cursive;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--bg);
+    background-image: radial-gradient(circle, #c5c5c5 1px, transparent 1px);
+    background-size: 28px 28px;
+    color: var(--grey);
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+    overflow-x: hidden;
+  }
+
+  /* CURSORS */
+  .cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    will-change: transform;
+  }
+  .cursor-arrow {
+    width: 0; height: 0;
+    border-right: 5px solid transparent;
+    border-bottom: 16px solid var(--c);
+    transform: skewX(-8deg);
+    flex-shrink: 0;
+    margin-top: 0px;
+  }
+  .cursor-label {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    padding: 3px 10px 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    background: var(--c);
+    margin-top: 10px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250, 249, 245, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 60px;
+  }
+  .nav-logo { font-weight: 700; font-size: 15px; color: var(--black); text-decoration: none; letter-spacing: -0.3px; }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--grey); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--black); }
+  .nav-cta {
+    background: var(--black); color: var(--white);
+    padding: 8px 20px; border-radius: 12px;
+    text-decoration: none; font-size: 14px; font-weight: 600;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.8; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; padding-top: 60px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding-left: 24px; padding-right: 24px;
+    position: relative; overflow: hidden;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent-light); border: 1px solid rgba(17,54,199,0.15);
+    color: var(--accent); font-size: 12px; font-weight: 600;
+    padding: 6px 14px; border-radius: 999px; letter-spacing: 0.8px;
+    text-transform: uppercase; margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  .hero h1 {
+    font-size: clamp(40px, 7vw, 80px); font-weight: 700; color: var(--black);
+    line-height: 1.05; letter-spacing: -2px; max-width: 800px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 em { font-style: italic; font-family: var(--font-hand); color: var(--accent); font-size: 1.05em; }
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px); color: var(--grey); max-width: 520px;
+    margin-top: 20px; line-height: 1.6;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--black); color: var(--white);
+    padding: 14px 28px; border-radius: 12px;
+    text-decoration: none; font-size: 15px; font-weight: 600;
+    transition: transform 0.15s, opacity 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { transform: translateY(-1px); opacity: 0.85; }
+  .btn-secondary {
+    background: transparent; color: var(--black);
+    padding: 14px 28px; border-radius: 12px; border: 1.5px solid rgba(0,0,0,0.15);
+    text-decoration: none; font-size: 15px; font-weight: 600;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--black); background: rgba(0,0,0,0.03); }
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 64px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 32px; font-weight: 700; color: var(--black); letter-spacing: -1px; display: block; }
+  .stat-label { font-size: 12px; color: var(--light-grey); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 500; }
+
+  /* PHOTO STRIP */
+  .photo-strip { padding: 80px 0 0; overflow: hidden; }
+  .strip-heading { text-align: center; font-family: var(--font-hand); font-size: clamp(36px, 6vw, 64px); color: var(--black); margin-bottom: 40px; font-weight: 700; }
+  .strip-track { display: flex; gap: 16px; animation: scroll 30s linear infinite; width: max-content; }
+  .strip-track:hover { animation-play-state: paused; }
+  .strip-item {
+    width: 260px; height: 180px; border-radius: 16px;
+    background: var(--accent-light); border: 1px solid rgba(17,54,199,0.1);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--accent); font-weight: 500; letter-spacing: 0.3px;
+  }
+
+  /* SECTION */
+  section { padding: 96px 40px; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 700; color: var(--black); letter-spacing: -1px; line-height: 1.1; max-width: 600px; }
+  .section-sub { font-size: 17px; color: var(--grey); max-width: 520px; margin-top: 16px; line-height: 1.6; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-top: 56px; }
+  .about-text p { margin-bottom: 16px; font-size: 16px; line-height: 1.7; }
+  .about-visual {
+    background: var(--accent-light); border-radius: 24px; border: 1px solid rgba(17,54,199,0.1);
+    padding: 48px; display: flex; flex-direction: column; gap: 20px;
+  }
+  .about-tag { display: inline-block; background: var(--black); color: var(--white); font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 8px; width: fit-content; }
+  .about-quote { font-family: var(--font-hand); font-size: 28px; color: var(--black); line-height: 1.3; font-weight: 600; }
+  .about-meta { font-size: 13px; color: var(--light-grey); }
+
+  /* FORMATOS */
+  .formats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 48px; }
+  .format-card {
+    background: rgba(250, 249, 245, 0.85); border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 20px; padding: 28px; transition: transform 0.2s, box-shadow 0.2s;
+    backdrop-filter: blur(4px);
+  }
+  .format-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+  .format-num { font-size: 11px; font-weight: 700; color: var(--light-grey); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+  .format-name { font-size: 20px; font-weight: 700; color: var(--black); margin-bottom: 8px; letter-spacing: -0.4px; }
+  .format-aka { font-size: 12px; color: var(--accent); font-weight: 600; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .format-desc { font-size: 14px; color: var(--grey); line-height: 1.6; margin-bottom: 20px; }
+  .format-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pill { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px; letter-spacing: 0.3px; }
+  .pill-freq { background: #e1f5ee; color: #085041; }
+  .pill-effort-low { background: #e1f5ee; color: #085041; }
+  .pill-effort-med { background: #faeeda; color: #633806; }
+  .pill-effort-high { background: #faece7; color: #712b13; }
+  .pill-size { background: #eeedfe; color: #3c3489; }
+
+  /* EQUIPO */
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 48px; }
+  .team-card {
+    background: rgba(250,249,245,0.85); border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 20px; padding: 28px; text-align: center; backdrop-filter: blur(4px);
+  }
+  .team-avatar {
+    width: 64px; height: 64px; border-radius: 50%; background: var(--accent-light);
+    border: 2px solid rgba(17,54,199,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px; color: var(--accent);
+    margin: 0 auto 16px;
+  }
+  .team-name { font-size: 16px; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+  .team-role { font-size: 13px; color: var(--grey); }
+
+  /* CTA BAND */
+  .cta-band {
+    background: var(--black); color: var(--white);
+    border-radius: 32px; margin: 0 40px 96px;
+    padding: 72px 64px; text-align: center;
+  }
+  .cta-band h2 { font-family: var(--font-hand); font-size: clamp(36px, 5vw, 60px); color: var(--white); font-weight: 700; margin-bottom: 16px; }
+  .cta-band p { font-size: 17px; color: rgba(255,255,255,0.6); margin-bottom: 36px; }
+  .btn-white { background: var(--white); color: var(--black); padding: 14px 32px; border-radius: 12px; text-decoration: none; font-size: 15px; font-weight: 700; display: inline-block; transition: opacity 0.2s; }
+  .btn-white:hover { opacity: 0.88; }
+
+  /* FOOTER */
+  footer { background: var(--black); color: rgba(255,255,255,0.5); padding: 56px 40px 40px; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-top { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; margin-bottom: 48px; }
+  .footer-brand { max-width: 280px; }
+  .footer-logo { font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 10px; }
+  .footer-logo span { color: var(--accent); }
+  .footer-tagline { font-size: 13px; line-height: 1.6; }
+  .footer-col h4 { font-size: 12px; font-weight: 600; color: var(--white); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--white); }
+  .footer-socials { display: flex; gap: 12px; margin-top: 16px; }
+  .social-icon { width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 700; transition: all 0.2s; }
+  .social-icon:hover { background: rgba(255,255,255,0.08); color: var(--white); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; display: flex; justify-content: space-between; font-size: 12px; flex-wrap: wrap; gap: 12px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 64px 20px; }
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .cta-band { margin: 0 20px 64px; padding: 48px 32px; }
+    footer { padding: 48px 20px 32px; }
+    .footer-top { flex-direction: column; }
+    .hero-stats { gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSORES FLOTANTES -->
+<div id="cursors"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">FoF <span>Córdoba</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Nosotros</a></li>
+    <li><a href="#formatos">Actividades</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+  </ul>
+  <a class="nav-cta" href="https://friends.figma.com/cordoba" target="_blank">Unirse →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">
+    <span class="hero-dot"></span>
+    El primer capítulo oficial de FoF en Argentina
+  </div>
+  <h1>La comunidad oficial de<br><em>Figma</em> en Córdoba.</h1>
+  <p class="hero-sub">Un espacio para diseñadores, product thinkers y creativos que quieren conectar, aprender y crecer juntos.</p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="https://friends.figma.com/cordoba" target="_blank">Unirse al capítulo →</a>
+    <a class="btn-secondary" href="#about">Conocer más</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num" id="counter">0</span>
+      <span class="stat-label">miembros</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">tipos de actividad</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">2025</span>
+      <span class="stat-label">establecido</span>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO STRIP -->
+<div class="photo-strip">
+  <div class="strip-heading">¡Vení a crear recuerdos con nosotros!</div>
+  <div style="overflow:hidden;">
+    <div class="strip-track">
+      <div class="strip-item">FoF Talks #1</div>
+      <div class="strip-item">Config Córdoba 2025</div>
+      <div class="strip-item">MeetJam #1</div>
+      <div class="strip-item">FoF Campus — UNC</div>
+      <div class="strip-item">FoF Workshop</div>
+      <div class="strip-item">MeetJam #2</div>
+      <div class="strip-item">FoF Talks #2</div>
+      <div class="strip-item">FoF Campus — UBP</div>
+      <div class="strip-item">FoF Talks #1</div>
+      <div class="strip-item">Config Córdoba 2025</div>
+      <div class="strip-item">MeetJam #1</div>
+      <div class="strip-item">FoF Campus — UNC</div>
+      <div class="strip-item">FoF Workshop</div>
+      <div class="strip-item">MeetJam #2</div>
+      <div class="strip-item">FoF Talks #2</div>
+      <div class="strip-item">FoF Campus — UBP</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">Sobre nosotros</div>
+    <h2 class="section-title">Construido por la comunidad, para la comunidad.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Friends of Figma Córdoba es el capítulo oficial de Friends of Figma para Córdoba, Argentina — y el primero de su tipo en el país.</p>
+        <p>Somos parte de una red global de más de 220 comunidades en 45 países. Nuestro objetivo es que cada diseñador, estudiante o entusiasta del producto en Córdoba tenga un espacio donde crecer.</p>
+        <p>Organizamos eventos gratuitos de distintos formatos a lo largo del año: desde lightning talks y workshops técnicos hasta meetups casuales y el Config Watch Party anual.</p>
+        <p>Creatividad. Colaboración. Aprendizaje continuo.</p>
+        <div style="margin-top:28px;">
+          <a class="btn-primary" href="https://friends.figma.com/cordoba" target="_blank">Unirse →</a>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="about-tag">Friends of Figma — Córdoba, ARG</div>
+        <div class="about-quote">"El diseño es mejor cuando se construye en comunidad."</div>
+        <div class="about-meta">220+ capítulos · 45 países · 1 nueva ciudad</div>
+        <div style="height:1px; background:rgba(17,54,199,0.1);"></div>
+        <div style="display:flex; gap:24px;">
+          <div>
+            <div style="font-size:24px; font-weight:700; color:#161212; letter-spacing:-0.5px;">100%</div>
+            <div style="font-size:12px; color:#c5c5c5; text-transform:uppercase; letter-spacing:0.8px; font-weight:600;">Gratuito</div>
+          </div>
+          <div>
+            <div style="font-size:24px; font-weight:700; color:#161212; letter-spacing:-0.5px;">ARG #1</div>
+            <div style="font-size:12px; color:#c5c5c5; text-transform:uppercase; letter-spacing:0.8px; font-weight:600;">Primer capítulo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATOS -->
+<section id="formatos" style="background:rgba(244,243,239,0.7); backdrop-filter:blur(4px); border-radius:32px; margin:0 20px;">
+  <div class="container">
+    <div class="section-label">Tipos de actividades</div>
+    <h2 class="section-title">5 formatos diseñados para todo el año.</h2>
+    <p class="section-sub">Cada formato tiene un propósito distinto — desde aprendizaje técnico hasta conexión informal.</p>
+    <div class="formats-grid">
+      <div class="format-card">
+        <div class="format-num">01</div>
+        <div class="format-name">Lightning Talks</div>
+        <div class="format-aka">FoF Talks</div>
+        <div class="format-desc">3–5 speakers de 10 min. Dinámico, fácil de llenar y perfecto para el primer evento. El formato que más conversación genera.</div>
+        <div class="format-pills">
+          <span class="pill pill-freq">2x año</span>
+          <span class="pill pill-effort-med">Esfuerzo medio</span>
+          <span class="pill pill-size">40–80 asistentes</span>
+        </div>
+      </div>
+      <div class="format-card">
+        <div class="format-num">02</div>
+        <div class="format-name">Config Watch Party</div>
+        <div class="format-aka">Config Córdoba</div>
+        <div class="format-desc">Streaming del evento global de Figma. El evento ancla del año — todos los capítulos del mundo lo hacen. Swag, networking y mucha energía.</div>
+        <div class="format-pills">
+          <span class="pill pill-freq">1x año — junio</span>
+          <span class="pill pill-effort-high">Esfuerzo alto</span>
+          <span class="pill pill-size">60–120 asistentes</span>
+        </div>
+      </div>
+      <div class="format-card">
+        <div class="format-num">03</div>
+        <div class="format-name">MeetJam</div>
+        <div class="format-aka">MeetJam Córdoba</div>
+        <div class="format-desc">Meetup casual en café. Sin speakers ni agenda fija. Para mantener la comunidad viva entre eventos grandes con el mínimo esfuerzo.</div>
+        <div class="format-pills">
+          <span class="pill pill-freq">3–4x año</span>
+          <span class="pill pill-effort-low">Esfuerzo bajo</span>
+          <span class="pill pill-size">15–30 asistentes</span>
+        </div>
+      </div>
+      <div class="format-card">
+        <div class="format-num">04</div>
+        <div class="format-name">Campus Connect</div>
+        <div class="format-aka">FoF Campus</div>
+        <div class="format-desc">Charla o workshop en universidades. Crecimiento de comunidad con estudiantes de diseño de UNC, UBP e IUART.</div>
+        <div class="format-pills">
+          <span class="pill pill-freq">2x año</span>
+          <span class="pill pill-effort-low">Esfuerzo bajo</span>
+          <span class="pill pill-size">30–80 asistentes</span>
+        </div>
+      </div>
+      <div class="format-card">
+        <div class="format-num">05</div>
+        <div class="format-name">Workshop</div>
+        <div class="format-aka">FoF Workshop</div>
+        <div class="format-desc">Sesión práctica hands-on en Figma. Para cerrar el año con algo técnico y memorable que la gente recuerda.</div>
+        <div class="format-pills">
+          <span class="pill pill-freq">1x año</span>
+          <span class="pill pill-effort-high">Esfuerzo alto</span>
+          <span class="pill pill-size">20–40 asistentes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPO -->
+<section id="equipo">
+  <div class="container">
+    <div class="section-label">El equipo</div>
+    <h2 class="section-title">Construido por diseñadores de Córdoba.</h2>
+    <p class="section-sub">Un equipo que dedica su tiempo a que esto sea posible.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">CL</div>
+        <div class="team-name">Tu nombre</div>
+        <div class="team-role">Community Lead</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">+</div>
+        <div class="team-name">Próximamente</div>
+        <div class="team-role">Co-Lead</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">+</div>
+        <div class="team-name">Próximamente</div>
+        <div class="team-role">Eventos</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">+</div>
+        <div class="team-name">Próximamente</div>
+        <div class="team-role">Comunicación</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <h2>¿Sos diseñador en Córdoba?</h2>
+  <p>Sumate al capítulo y sé parte de la comunidad de diseño más grande de la ciudad.</p>
+  <a class="btn-white" href="https://friends.figma.com/cordoba" target="_blank">Unirse gratis →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">Friends of Figma <span>Córdoba</span></div>
+        <p class="footer-tagline">Creatividad. Colaboración. Aprendizaje continuo.<br>El capítulo oficial de FoF en Córdoba, Argentina.</p>
+        <div class="footer-socials" style="margin-top:20px;">
+          <a class="social-icon" href="https://instagram.com/fof_cordoba" target="_blank">IG</a>
+          <a class="social-icon" href="https://linkedin.com/company/fof-cordoba" target="_blank">LI</a>
+          <a class="social-icon" href="https://friends.figma.com/cordoba" target="_blank">FoF</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Comunidad</h4>
+        <ul>
+          <li><a href="#about">Sobre nosotros</a></li>
+          <li><a href="#formatos">Actividades</a></li>
+          <li><a href="#equipo">El equipo</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Links rápidos</h4>
+        <ul>
+          <li><a href="https://friends.figma.com/cordoba" target="_blank">Unirse al capítulo</a></li>
+          <li><a href="https://www.figma.com/code-of-conduct" target="_blank">Código de conducta</a></li>
+          <li><a href="https://www.figma.com/legal/events-tos" target="_blank">Términos del evento</a></li>
+          <li><a href="https://friends.figma.com/policies" target="_blank">Políticas FoF</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Friends of Figma Córdoba</span>
+      <span>No afiliado a Figma, Inc. · Capítulo oficial de Friends of Figma</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// --- CURSORES ANIMADOS (solo en hero, lentos, alrededor del texto) ---
+const cursors = [
+  { label: 'Diseñador UX',      color: '#1136c7' },
+  { label: 'Product Manager',   color: '#f59e0b' },
+  { label: 'Desarrollador',     color: '#10b981' },
+  { label: 'Diseñador Gráfico', color: '#ec4899' },
+  { label: 'Estudiante',        color: '#ef4444' },
+];
+
+const cursorContainer = document.getElementById('cursors');
+
+// Zona segura: los cursores orbitan en los bordes del hero, lejos del texto central
+// Texto central ocupa aprox 30%-70% del ancho y 25%-75% del alto
+// Zonas disponibles: arriba, abajo, izquierda, derecha (margen del hero)
+const ZONES = [
+  // top-left
+  { xMin: 0.03, xMax: 0.35, yMin: 0.05, yMax: 0.35 },
+  // top-right
+  { xMin: 0.65, xMax: 0.97, yMin: 0.05, yMax: 0.35 },
+  // bottom-left
+  { xMin: 0.03, xMax: 0.35, yMin: 0.65, yMax: 0.92 },
+  // bottom-right
+  { xMin: 0.65, xMax: 0.97, yMin: 0.65, yMax: 0.92 },
+  // bottom-center
+  { xMin: 0.30, xMax: 0.70, yMin: 0.75, yMax: 0.92 },
+];
+
+function randInZone(z) {
+  return {
+    x: z.xMin + Math.random() * (z.xMax - z.xMin),
+    y: z.yMin + Math.random() * (z.yMax - z.yMin),
+  };
+}
+
+cursors.forEach((c, i) => {
+  const el = document.createElement('div');
+  el.className = 'cursor';
+  el.style.setProperty('--c', c.color);
+  el.innerHTML = `<div class="cursor-arrow" style="border-bottom-color:${c.color}"></div><div class="cursor-label" style="background:${c.color}">${c.label}</div>`;
+  cursorContainer.appendChild(el);
+
+  // Cada cursor arranca en su zona y se mueve a waypoints dentro de ella
+  const zone = ZONES[i % ZONES.length];
+  let current = randInZone(zone);
+  let target  = randInZone(zone);
+  let progress = 0;
+  // Velocidad muy lenta: 0.0018–0.0026 por frame
+  const speed = 0.0018 + i * 0.00016;
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  function animateCursor() {
+    const hero = document.querySelector('.hero');
+    if (!hero) { requestAnimationFrame(animateCursor); return; }
+    const rect = hero.getBoundingClientRect();
+    const heroTop    = rect.top  + window.scrollY;
+    const heroHeight = rect.height;
+    const heroWidth  = rect.width;
+
+    progress += speed;
+    if (progress >= 1) {
+      progress = 0;
+      current = { ...target };
+      target = randInZone(zone);
+    }
+
+    const t = easeInOut(Math.min(progress, 1));
+    const px = lerp(current.x, target.x, t);
+    const py = lerp(current.y, target.y, t);
+
+    const absX = px * heroWidth;
+    const absY = heroTop + py * heroHeight;
+
+    el.style.transform = `translate(${absX}px, ${absY}px)`;
+
+    // Ocultar si se hizo scroll más allá del hero
+    const scrollY = window.scrollY;
+    el.style.opacity = scrollY < heroHeight * 0.8 ? '1' : '0';
+
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+});
+
+// --- CONTADOR ---
+const counter = document.getElementById('counter');
+let count = 0;
+const target = 1;
+const step = target / 75;
+const iv = setInterval(() => {
+  count = Math.min(count + step, target);
+  counter.textContent = Math.round(count);
+  if (count >= target) clearInterval(iv);
+}, 16);
+
+// --- SCROLL ANIMATIONS ---
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) { el.target.style.opacity = '1'; el.target.style.transform = 'translateY(0)'; }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.format-card, .team-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
