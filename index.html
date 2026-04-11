@@ -34,15 +34,20 @@
   }
 
   /* CURSORS */
-  .cursor {
-    position: fixed;
+  #cursors {
+    position: absolute;
+    inset: 0;
     pointer-events: none;
-    z-index: 9999;
+    overflow: hidden;
+    z-index: 10;
+  }
+  .cursor {
+    position: absolute;
+    pointer-events: none;
     display: flex;
     align-items: flex-start;
     gap: 5px;
     will-change: transform;
-    transition: opacity 0.25s ease;
   }
   .cursor-arrow {
     width: 0; height: 0;
@@ -91,7 +96,7 @@
     min-height: 100vh; padding-top: 60px;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center; padding-left: 24px; padding-right: 24px;
-    position: relative; overflow: hidden;
+    position: relative; overflow: hidden; isolation: isolate;
   }
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
@@ -287,9 +292,6 @@
 </head>
 <body>
 
-<!-- CURSORES FLOTANTES -->
-<div id="cursors"></div>
-
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">FoF <span>Córdoba</span></a>
@@ -304,6 +306,8 @@
 
 <!-- HERO -->
 <section class="hero">
+<!-- CURSORES FLOTANTES — dentro del hero para que scrolleen con la sección -->
+<div id="cursors"></div>
   <div class="hero-eyebrow">
     <span class="hero-dot"></span>
     El primer capítulo oficial de FoF en Argentina
@@ -611,7 +615,6 @@ cursors.forEach((c, i) => {
   function animateCursor() {
     const hero = document.querySelector('.hero');
     if (!hero) { requestAnimationFrame(animateCursor); return; }
-    const heroHeight = hero.offsetHeight;
 
     progress += speed;
     if (progress >= 1) {
@@ -624,20 +627,11 @@ cursors.forEach((c, i) => {
     const px = lerp(current.x, target.x, t);
     const py = lerp(current.y, target.y, t);
 
-    // Posición fija al viewport — no depende del scroll
-    const absX = px * window.innerWidth;
-    const absY = py * window.innerHeight;
+    // Coordenadas relativas al hero — scrollean naturalmente con la sección
+    const absX = px * hero.offsetWidth;
+    const absY = py * hero.offsetHeight;
 
     el.style.transform = `translate(${absX}px, ${absY}px)`;
-
-    // Fade out en cuanto el usuario empieza a scrollear
-    const scrollY = window.scrollY;
-    const fadeStart = heroHeight * 0.05;
-    const fadeEnd   = heroHeight * 0.18;
-    const op = scrollY <= fadeStart ? 1
-             : scrollY >= fadeEnd   ? 0
-             : 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
-    el.style.opacity = String(op);
 
     requestAnimationFrame(animateCursor);
   }

@@ -1,7 +1,12 @@
 {
-  "version": "1.0.3",
+  "version": "1.0.4",
   "date": "2026-04-11",
   "history": [
+    {
+      "version": "1.0.4",
+      "date": "2026-04-11",
+      "note": "Cursores pasan a position absolute dentro del hero — scrollean con la sección naturalmente"
+    },
     {
       "version": "1.0.3",
       "date": "2026-04-11",
