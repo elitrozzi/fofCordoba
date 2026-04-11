@@ -1,7 +1,12 @@
 {
-  "version": "1.0.4",
+  "version": "1.0.5",
   "date": "2026-04-11",
   "history": [
+    {
+      "version": "1.0.5",
+      "date": "2026-04-11",
+      "note": "Elimina banner 'primer capítulo en Argentina' y limita cursores a 2 en mobile"
+    },
     {
       "version": "1.0.4",
       "date": "2026-04-11",

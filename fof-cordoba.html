@@ -308,10 +308,6 @@
 <section class="hero">
 <!-- CURSORES FLOTANTES — dentro del hero para que scrolleen con la sección -->
 <div id="cursors"></div>
-  <div class="hero-eyebrow">
-    <span class="hero-dot"></span>
-    El primer capítulo oficial de FoF en Argentina
-  </div>
   <h1>La comunidad oficial de<br><em>Figma</em> en Córdoba.</h1>
   <p class="hero-sub">Un espacio para diseñadores, product thinkers y creativos que quieren conectar, aprender y crecer juntos.</p>
   <div class="hero-actions">
@@ -561,13 +557,15 @@
 
 <script>
 // --- CURSORES ANIMADOS (solo en hero, lentos, alrededor del texto) ---
-const cursors = [
+const allCursors = [
   { label: 'Diseñador UX',      color: '#1136c7' },
   { label: 'Product Manager',   color: '#f59e0b' },
   { label: 'Desarrollador',     color: '#10b981' },
   { label: 'Diseñador Gráfico', color: '#ec4899' },
   { label: 'Estudiante',        color: '#ef4444' },
 ];
+const isMobile = window.innerWidth < 768;
+const cursors = isMobile ? allCursors.slice(0, 2) : allCursors;
 
 const cursorContainer = document.getElementById('cursors');
 
