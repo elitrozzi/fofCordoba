@@ -1,7 +1,12 @@
 {
-  "version": "1.0.9",
+  "version": "1.1.0",
   "date": "2026-04-11",
   "history": [
+    {
+      "version": "1.1.0",
+      "date": "2026-04-11",
+      "note": "Stats del hero en una sola fila en mobile con font reducido y layout ajustado"
+    },
     {
       "version": "1.0.9",
       "date": "2026-04-11",
