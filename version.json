@@ -1,7 +1,12 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "date": "2026-04-11",
   "history": [
+    {
+      "version": "1.0.1",
+      "date": "2026-04-11",
+      "note": "Agrega sección de participación con formulario, fix cursores fijos al hero y corrección de texto sobre Buenos Aires"
+    },
     {
       "version": "1.0.0",
       "date": "2026-04-11",

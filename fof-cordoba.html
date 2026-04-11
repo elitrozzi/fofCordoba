@@ -233,6 +233,41 @@
   .social-icon:hover { background: rgba(255,255,255,0.08); color: var(--white); }
   .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; display: flex; justify-content: space-between; font-size: 12px; flex-wrap: wrap; gap: 12px; }
 
+  /* PARTICIPA SECTION */
+  .participa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+  .participa-card {
+    background: rgba(250,249,245,0.85); border: 1.5px solid rgba(0,0,0,0.07);
+    border-radius: 24px; padding: 40px 36px; display: flex; flex-direction: column;
+    gap: 16px; transition: transform 0.2s, box-shadow 0.2s; backdrop-filter: blur(4px);
+  }
+  .participa-card:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
+  .participa-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .participa-icon-talk { background: var(--accent-light); }
+  .participa-icon-sponsor { background: #fef3c7; }
+  .participa-card h3 { font-size: 22px; font-weight: 700; color: var(--black); letter-spacing: -0.4px; }
+  .participa-card p { font-size: 15px; color: var(--grey); line-height: 1.6; flex: 1; }
+  .btn-participa {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--black); color: var(--white);
+    padding: 12px 24px; border-radius: 12px;
+    text-decoration: none; font-size: 14px; font-weight: 600;
+    transition: opacity 0.2s; width: fit-content; margin-top: 8px;
+  }
+  .btn-participa:hover { opacity: 0.8; }
+  .btn-participa-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--black);
+    padding: 12px 24px; border-radius: 12px; border: 1.5px solid rgba(0,0,0,0.15);
+    text-decoration: none; font-size: 14px; font-weight: 600;
+    transition: border-color 0.2s, background 0.2s; width: fit-content; margin-top: 8px;
+  }
+  .btn-participa-outline:hover { border-color: var(--black); background: rgba(0,0,0,0.03); }
+  @media (max-width: 768px) { .participa-grid { grid-template-columns: 1fr; } }
+
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
   @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -261,6 +296,7 @@
     <li><a href="#about">Nosotros</a></li>
     <li><a href="#formatos">Actividades</a></li>
     <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#participa">Participá</a></li>
   </ul>
   <a class="nav-cta" href="https://friends.figma.com/cordoba" target="_blank">Unirse →</a>
 </nav>
@@ -325,7 +361,7 @@
     <h2 class="section-title">Construido por la comunidad, para la comunidad.</h2>
     <div class="about-grid">
       <div class="about-text">
-        <p>Friends of Figma Córdoba es el capítulo oficial de Friends of Figma para Córdoba, Argentina — y el primero de su tipo en el país.</p>
+        <p>Friends of Figma Córdoba es el capítulo oficial de Friends of Figma para Córdoba, Argentina.</p>
         <p>Somos parte de una red global de más de 220 comunidades en 45 países. Nuestro objetivo es que cada diseñador, estudiante o entusiasta del producto en Córdoba tenga un espacio donde crecer.</p>
         <p>Organizamos eventos gratuitos de distintos formatos a lo largo del año: desde lightning talks y workshops técnicos hasta meetups casuales y el Config Watch Party anual.</p>
         <p>Creatividad. Colaboración. Aprendizaje continuo.</p>
@@ -450,6 +486,29 @@
   </div>
 </section>
 
+<!-- PARTICIPA -->
+<section id="participa">
+  <div class="container">
+    <div class="section-label">Sumá tu energía</div>
+    <h2 class="section-title">¿Querés ser parte activa de FoF Córdoba?</h2>
+    <p class="section-sub">Ya sea compartiendo tu conocimiento en una charla o apoyando la comunidad como sponsor, este es el lugar.</p>
+    <div class="participa-grid">
+      <div class="participa-card">
+        <div class="participa-icon participa-icon-talk">🎤</div>
+        <h3>Quiero dar una charla</h3>
+        <p>¿Tenés algo que contar? Compartí tu experiencia en diseño, producto, UX research, systems, o lo que más te apasione. Buscamos speakers de todos los niveles.</p>
+        <a class="btn-participa" href="https://docs.google.com/forms/d/e/PLACEHOLDER_FORM_ID/viewform" target="_blank" rel="noopener">Proponer una charla →</a>
+      </div>
+      <div class="participa-card">
+        <div class="participa-icon participa-icon-sponsor">🤝</div>
+        <h3>Quiero auspiciar un evento</h3>
+        <p>Si tu empresa o estudio quiere conectar con la comunidad de diseño de Córdoba, podés auspiciar nuestros eventos — desde meetups hasta workshops.</p>
+        <a class="btn-participa-outline" href="https://docs.google.com/forms/d/e/PLACEHOLDER_FORM_ID/viewform" target="_blank" rel="noopener">Contactarme como sponsor →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <div class="cta-band">
   <h2>¿Sos diseñador en Córdoba?</h2>
@@ -551,10 +610,7 @@ cursors.forEach((c, i) => {
   function animateCursor() {
     const hero = document.querySelector('.hero');
     if (!hero) { requestAnimationFrame(animateCursor); return; }
-    const rect = hero.getBoundingClientRect();
-    const heroTop    = rect.top  + window.scrollY;
-    const heroHeight = rect.height;
-    const heroWidth  = rect.width;
+    const heroHeight = hero.offsetHeight;
 
     progress += speed;
     if (progress >= 1) {
@@ -567,14 +623,14 @@ cursors.forEach((c, i) => {
     const px = lerp(current.x, target.x, t);
     const py = lerp(current.y, target.y, t);
 
-    const absX = px * heroWidth;
-    const absY = heroTop + py * heroHeight;
+    // Posición fija al viewport — no depende del scroll
+    const absX = px * window.innerWidth;
+    const absY = py * window.innerHeight;
 
     el.style.transform = `translate(${absX}px, ${absY}px)`;
 
     // Ocultar si se hizo scroll más allá del hero
-    const scrollY = window.scrollY;
-    el.style.opacity = scrollY < heroHeight * 0.8 ? '1' : '0';
+    el.style.opacity = window.scrollY < heroHeight * 0.8 ? '1' : '0';
 
     requestAnimationFrame(animateCursor);
   }
