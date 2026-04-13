@@ -79,15 +79,16 @@
   .nav-logo { font-weight: 700; font-size: 15px; color: var(--black); text-decoration: none; letter-spacing: -0.3px; }
   .nav-logo span { color: var(--accent); }
   .nav-links { display: flex; gap: 32px; list-style: none; }
-  .nav-links a { text-decoration: none; color: var(--grey); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a { text-decoration: none; color: var(--grey); font-size: 14px; font-weight: 500; transition: color 0.15s var(--ease-out); }
   .nav-links a:hover { color: var(--black); }
   .nav-cta {
     background: var(--black); color: var(--white);
     padding: 8px 20px; border-radius: 12px;
     text-decoration: none; font-size: 14px; font-weight: 600;
-    transition: opacity 0.2s;
+    transition: opacity 0.15s var(--ease-out), transform 0.15s var(--ease-out);
   }
   .nav-cta:hover { opacity: 0.8; }
+  .nav-cta:active { transform: scale(0.96); opacity: 1; transition-duration: 0.1s; }
 
   /* HERO */
   .hero {
@@ -200,7 +201,9 @@
   .team-card {
     background: rgba(250,249,245,0.85); border: 1px solid rgba(0,0,0,0.07);
     border-radius: 20px; padding: 28px; text-align: center; backdrop-filter: blur(4px);
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
   }
+  .team-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.07); }
   .team-avatar {
     width: 64px; height: 64px; border-radius: 50%; background: var(--accent-light);
     border: 2px solid rgba(17,54,199,0.15);
@@ -233,7 +236,7 @@
   .footer-tagline { font-size: 13px; line-height: 1.6; }
   .footer-col h4 { font-size: 12px; font-weight: 600; color: var(--white); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
   .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .footer-col a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; transition: color 0.2s; }
+  .footer-col a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; transition: color 0.15s var(--ease-out); }
   .footer-col a:hover { color: var(--white); }
   .footer-socials { display: flex; gap: 12px; margin-top: 16px; }
   .social-icon { width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 700; transition: background 0.15s var(--ease-out), color 0.15s var(--ease-out), transform 0.15s var(--ease-out); }
@@ -619,7 +622,8 @@ cursors.forEach((c, i) => {
   const speed = 0.0018 + i * 0.00016;
 
   function lerp(a, b, t) { return a + (b - a) * t; }
-  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+  function easeInOut(t) { // cubic-bezier(0.77,0,0.175,1) — strong ease-in-out
+    return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
 
   function animateCursor() {
     const hero = document.querySelector('.hero');
@@ -667,8 +671,8 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.format-card, .team-card').forEach(el => {
   el.style.opacity = '0';
-  el.style.transform = 'translateY(16px)';
-  el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+  el.style.transform = 'translateY(14px)';
+  el.style.transition = 'opacity 0.35s cubic-bezier(0.23,1,0.32,1), transform 0.35s cubic-bezier(0.23,1,0.32,1)';
   observer.observe(el);
 });
 </script>
