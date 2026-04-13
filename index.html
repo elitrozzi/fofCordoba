@@ -19,6 +19,8 @@
     --accent-light: rgba(17, 54, 199, 0.08);
     --font-sans: 'Work Sans', sans-serif;
     --font-hand: 'Caveat', cursive;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   }
   html { scroll-behavior: smooth; }
   body {
@@ -100,42 +102,44 @@
     color: var(--accent); font-size: 12px; font-weight: 600;
     padding: 6px 14px; border-radius: 999px; letter-spacing: 0.8px;
     text-transform: uppercase; margin-bottom: 28px;
-    animation: fadeUp 0.6s ease both;
+    animation: fadeUp 0.45s var(--ease-out) both;
   }
   .hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
   .hero h1 {
     font-size: clamp(40px, 7vw, 80px); font-weight: 700; color: var(--black);
     line-height: 1.05; letter-spacing: -2px; max-width: 800px;
-    animation: fadeUp 0.6s 0.1s ease both;
+    animation: fadeUp 0.45s 0.1s var(--ease-out) both;
   }
   .hero h1 em { font-style: italic; font-family: var(--font-hand); color: var(--accent); font-size: 1.05em; }
   .hero-sub {
     font-size: clamp(16px, 2vw, 20px); color: var(--grey); max-width: 520px;
     margin-top: 20px; line-height: 1.6;
-    animation: fadeUp 0.6s 0.2s ease both;
+    animation: fadeUp 0.45s 0.2s var(--ease-out) both;
   }
   .hero-actions {
     display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; justify-content: center;
-    animation: fadeUp 0.6s 0.3s ease both;
+    animation: fadeUp 0.45s 0.3s var(--ease-out) both;
   }
   .btn-primary {
     background: var(--black); color: var(--white);
     padding: 14px 28px; border-radius: 12px;
     text-decoration: none; font-size: 15px; font-weight: 600;
-    transition: transform 0.15s, opacity 0.15s;
+    transition: transform 0.15s var(--ease-out), opacity 0.15s var(--ease-out);
     display: inline-flex; align-items: center; gap: 8px;
   }
-  .btn-primary:hover { transform: translateY(-1px); opacity: 0.85; }
+  .btn-primary:hover { transform: translateY(-2px) scale(1.01); opacity: 0.88; }
+  .btn-primary:active { transform: scale(0.97); opacity: 1; transition-duration: 0.1s; }
   .btn-secondary {
     background: transparent; color: var(--black);
     padding: 14px 28px; border-radius: 12px; border: 1.5px solid rgba(0,0,0,0.15);
     text-decoration: none; font-size: 15px; font-weight: 600;
-    transition: border-color 0.15s, background 0.15s;
+    transition: border-color 0.15s var(--ease-out), background 0.15s var(--ease-out);
   }
   .btn-secondary:hover { border-color: var(--black); background: rgba(0,0,0,0.03); }
+  .btn-secondary:active { transform: scale(0.97); transition-duration: 0.1s; }
   .hero-stats {
     display: flex; gap: 48px; margin-top: 64px; flex-wrap: wrap; justify-content: center;
-    animation: fadeUp 0.6s 0.4s ease both;
+    animation: fadeUp 0.45s 0.4s var(--ease-out) both;
   }
   .stat { text-align: center; }
   .stat-num { font-size: 32px; font-weight: 700; color: var(--black); letter-spacing: -1px; display: block; }
@@ -175,10 +179,10 @@
   .formats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 48px; }
   .format-card {
     background: rgba(250, 249, 245, 0.85); border: 1px solid rgba(0,0,0,0.07);
-    border-radius: 20px; padding: 28px; transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 20px; padding: 28px; transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
     backdrop-filter: blur(4px);
   }
-  .format-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+  .format-card:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(0,0,0,0.09); }
   .format-num { font-size: 11px; font-weight: 700; color: var(--light-grey); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
   .format-name { font-size: 20px; font-weight: 700; color: var(--black); margin-bottom: 8px; letter-spacing: -0.4px; }
   .format-aka { font-size: 12px; color: var(--accent); font-weight: 600; letter-spacing: 0.5px; margin-bottom: 12px; }
@@ -215,8 +219,9 @@
   }
   .cta-band h2 { font-family: var(--font-hand); font-size: clamp(36px, 5vw, 60px); color: var(--white); font-weight: 700; margin-bottom: 16px; }
   .cta-band p { font-size: 17px; color: rgba(255,255,255,0.6); margin-bottom: 36px; }
-  .btn-white { background: var(--white); color: var(--black); padding: 14px 32px; border-radius: 12px; text-decoration: none; font-size: 15px; font-weight: 700; display: inline-block; transition: opacity 0.2s; }
-  .btn-white:hover { opacity: 0.88; }
+  .btn-white { background: var(--white); color: var(--black); padding: 14px 32px; border-radius: 12px; text-decoration: none; font-size: 15px; font-weight: 700; display: inline-block; transition: opacity 0.15s var(--ease-out), transform 0.15s var(--ease-out); }
+  .btn-white:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-white:active { transform: scale(0.97); opacity: 1; transition-duration: 0.1s; }
 
   /* FOOTER */
   footer { background: var(--black); color: rgba(255,255,255,0.5); padding: 56px 40px 40px; }
@@ -231,8 +236,9 @@
   .footer-col a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; transition: color 0.2s; }
   .footer-col a:hover { color: var(--white); }
   .footer-socials { display: flex; gap: 12px; margin-top: 16px; }
-  .social-icon { width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 700; transition: all 0.2s; }
-  .social-icon:hover { background: rgba(255,255,255,0.08); color: var(--white); }
+  .social-icon { width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 700; transition: background 0.15s var(--ease-out), color 0.15s var(--ease-out), transform 0.15s var(--ease-out); }
+  .social-icon:hover { background: rgba(255,255,255,0.08); color: var(--white); transform: translateY(-1px); }
+  .social-icon:active { transform: scale(0.95); transition-duration: 0.1s; }
   .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; display: flex; justify-content: space-between; font-size: 12px; flex-wrap: wrap; gap: 12px; }
 
   /* PARTICIPA SECTION */
@@ -240,7 +246,7 @@
   .participa-card {
     background: rgba(250,249,245,0.85); border: 1.5px solid rgba(0,0,0,0.07);
     border-radius: 24px; padding: 40px 36px; display: flex; flex-direction: column;
-    gap: 16px; transition: transform 0.2s, box-shadow 0.2s; backdrop-filter: blur(4px);
+    gap: 16px; transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out); backdrop-filter: blur(4px);
   }
   .participa-card:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
   .participa-icon {
@@ -257,20 +263,22 @@
     background: var(--black); color: var(--white);
     padding: 12px 24px; border-radius: 12px;
     text-decoration: none; font-size: 14px; font-weight: 600;
-    transition: opacity 0.2s; width: fit-content; margin-top: 8px;
+    transition: opacity 0.15s var(--ease-out), transform 0.15s var(--ease-out); width: fit-content; margin-top: 8px;
   }
-  .btn-participa:hover { opacity: 0.8; }
+  .btn-participa:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn-participa:active { transform: scale(0.97); opacity: 1; transition-duration: 0.1s; }
   .btn-participa-outline {
     display: inline-flex; align-items: center; gap: 8px;
     background: transparent; color: var(--black);
     padding: 12px 24px; border-radius: 12px; border: 1.5px solid rgba(0,0,0,0.15);
     text-decoration: none; font-size: 14px; font-weight: 600;
-    transition: border-color 0.2s, background 0.2s; width: fit-content; margin-top: 8px;
+    transition: border-color 0.15s var(--ease-out), background 0.15s var(--ease-out), transform 0.15s var(--ease-out); width: fit-content; margin-top: 8px;
   }
-  .btn-participa-outline:hover { border-color: var(--black); background: rgba(0,0,0,0.03); }
+  .btn-participa-outline:hover { border-color: var(--black); background: rgba(0,0,0,0.03); transform: translateY(-1px); }
+  .btn-participa-outline:active { transform: scale(0.97); transition-duration: 0.1s; }
   @media (max-width: 768px) { .participa-grid { grid-template-columns: 1fr; } }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
   @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
