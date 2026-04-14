@@ -79,8 +79,9 @@
   .nav-logo { font-weight: 700; font-size: 15px; color: var(--black); text-decoration: none; letter-spacing: -0.3px; }
   .nav-logo span { color: var(--accent); }
   .nav-links { display: flex; gap: 32px; list-style: none; }
-  .nav-links a { text-decoration: none; color: var(--grey); font-size: 14px; font-weight: 500; transition: color 0.15s var(--ease-out); }
+  .nav-links a { text-decoration: none; color: var(--grey); font-size: 14px; font-weight: 500; transition: color 0.2s var(--ease-out); }
   .nav-links a:hover { color: var(--black); }
+  .nav-links a.nav-active { color: var(--nav-active-color, var(--black)); font-weight: 600; }
   .nav-cta {
     background: var(--black); color: var(--white);
     padding: 8px 20px; border-radius: 12px;
@@ -222,6 +223,9 @@
   }
   .cta-band h2 { font-family: var(--font-hand); font-size: clamp(36px, 5vw, 60px); color: var(--white); font-weight: 700; margin-bottom: 16px; }
   .cta-band p { font-size: 17px; color: rgba(255,255,255,0.6); margin-bottom: 36px; }
+  .cta-stats { display: flex; justify-content: center; gap: 48px; margin-bottom: 40px; flex-wrap: wrap; }
+  .cta-stat-number { font-family: var(--font-hand); font-size: 52px; font-weight: 700; color: var(--white); line-height: 1; }
+  .cta-stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 6px; letter-spacing: 0.3px; }
   .btn-white { background: var(--white); color: var(--black); padding: 14px 32px; border-radius: 12px; text-decoration: none; font-size: 15px; font-weight: 700; display: inline-block; transition: opacity 0.15s var(--ease-out), transform 0.15s var(--ease-out); }
   .btn-white:hover { opacity: 0.88; transform: translateY(-1px); }
   .btn-white:active { transform: scale(0.97); opacity: 1; transition-duration: 0.1s; }
@@ -306,22 +310,23 @@
 <nav>
   <a class="nav-logo" href="#">FoF <span>Córdoba</span></a>
   <ul class="nav-links">
-    <li><a href="#about">Nosotros</a></li>
-    <li><a href="#formatos">Actividades</a></li>
-    <li><a href="#equipo">Equipo</a></li>
-    <li><a href="#participa">Participá</a></li>
+    <li><a href="#hero"     data-color="#1136c7">Inicio</a></li>
+    <li><a href="#about"    data-color="#f59e0b">Nosotros</a></li>
+    <li><a href="#formatos" data-color="#10b981">Actividades</a></li>
+    <li><a href="#equipo"   data-color="#ec4899">Equipo</a></li>
+    <li><a href="#participa" data-color="#ef4444">Participá</a></li>
   </ul>
-  <a class="nav-cta" href="https://friends.figma.com/cordoba" target="_blank">Unirse →</a>
+  <a class="nav-cta" href="https://friends.figma.com/cordoba/" target="_blank">Unirse →</a>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="hero">
 <!-- CURSORES FLOTANTES — dentro del hero para que scrolleen con la sección -->
 <div id="cursors"></div>
   <h1>Comunidad oficial de<br><em>Figma</em> en Córdoba.</h1>
   <p class="hero-sub">Un espacio para diseñadores, product thinkers y creativos que quieren conectar, aprender y crecer juntos.</p>
   <div class="hero-actions">
-    <a class="btn-primary" href="https://friends.figma.com/cordoba" target="_blank">Unirse al capítulo →</a>
+    <a class="btn-primary" href="https://friends.figma.com/cordoba/" target="_blank">Unirse al capítulo →</a>
     <a class="btn-secondary" href="#about">Conocer más</a>
   </div>
   <div class="hero-stats" style="display:none;">
@@ -376,7 +381,7 @@
         <p>Organizamos eventos gratuitos durante todo el año: talks, workshops, meetups casuales y el Config Watch Party anual.</p>
         <p>Un espacio para diseñadores, estudiantes y entusiastas del producto. Creatividad, colaboración y aprendizaje continuo.</p>
         <div style="margin-top:28px;">
-          <a class="btn-primary" href="https://friends.figma.com/cordoba" target="_blank">Unirse →</a>
+          <a class="btn-primary" href="https://friends.figma.com/cordoba/" target="_blank">Unirse →</a>
         </div>
       </div>
       <div class="about-visual">
@@ -498,7 +503,17 @@
 <div class="cta-band">
   <h2>¿Sos diseñador en Córdoba?</h2>
   <p>Sumate al capítulo y sé parte de la comunidad de diseño más grande de la ciudad.</p>
-  <a class="btn-white" href="https://friends.figma.com/cordoba" target="_blank">Unirse gratis →</a>
+  <div class="cta-stats">
+    <div>
+      <div class="cta-stat-number">203</div>
+      <div class="cta-stat-label">miembros</div>
+    </div>
+    <div>
+      <div class="cta-stat-number">3</div>
+      <div class="cta-stat-label">eventos realizados</div>
+    </div>
+  </div>
+  <a class="btn-white" href="https://friends.figma.com/dashboard/cordoba/home" target="_blank">Unirse a la comunidad →</a>
 </div>
 
 <!-- FOOTER -->
@@ -511,7 +526,7 @@
         <div class="footer-socials" style="margin-top:20px;">
           <a class="social-icon" href="https://instagram.com/fof_cordoba" target="_blank">IG</a>
           <a class="social-icon" href="https://linkedin.com/company/fof-cordoba" target="_blank">LI</a>
-          <a class="social-icon" href="https://friends.figma.com/cordoba" target="_blank">FoF</a>
+          <a class="social-icon" href="https://friends.figma.com/cordoba/" target="_blank">FoF</a>
         </div>
       </div>
       <div class="footer-col">
@@ -525,7 +540,7 @@
       <div class="footer-col">
         <h4>Links rápidos</h4>
         <ul>
-          <li><a href="https://friends.figma.com/cordoba" target="_blank">Unirse al capítulo</a></li>
+          <li><a href="https://friends.figma.com/cordoba/" target="_blank">Unirse al capítulo</a></li>
           <li><a href="https://www.figma.com/code-of-conduct" target="_blank">Código de conducta</a></li>
           <li><a href="https://www.figma.com/legal/events-tos" target="_blank">Términos del evento</a></li>
           <li><a href="https://friends.figma.com/policies" target="_blank">Políticas FoF</a></li>
@@ -635,6 +650,30 @@ const iv = setInterval(() => {
   counter.textContent = Math.round(count);
   if (count >= target) clearInterval(iv);
 }, 16);
+
+// --- ACTIVE NAV ---
+const navLinks = document.querySelectorAll('.nav-links a[data-color]');
+const sections = ['hero', 'about', 'formatos', 'equipo', 'participa'].map(id => document.getElementById(id));
+
+function setActiveNav(id) {
+  navLinks.forEach(a => {
+    const isActive = a.getAttribute('href') === '#' + id;
+    if (isActive) {
+      a.classList.add('nav-active');
+      a.style.setProperty('--nav-active-color', a.dataset.color);
+    } else {
+      a.classList.remove('nav-active');
+    }
+  });
+}
+
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) setActiveNav(entry.target.id);
+  });
+}, { threshold: 0.3, rootMargin: '-60px 0px -40% 0px' });
+
+sections.forEach(s => { if (s) sectionObserver.observe(s); });
 
 // --- SCROLL ANIMATIONS ---
 const observer = new IntersectionObserver((entries) => {

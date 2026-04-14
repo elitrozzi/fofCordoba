@@ -1,7 +1,12 @@
 {
-  "version": "1.2.3",
-  "date": "2026-04-13",
+  "version": "1.2.4",
+  "date": "2026-04-14",
   "history": [
+    {
+      "version": "1.2.4",
+      "date": "2026-04-14",
+      "note": "Agrega stats de comunidad en CTA, link Bevy, nav Inicio y active nav con colores de cursores"
+    },
     {
       "version": "1.2.3",
       "date": "2026-04-13",
